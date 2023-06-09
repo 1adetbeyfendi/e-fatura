@@ -27,6 +27,18 @@ import type {
   UpdateUserInformationPayload
 } from './types'
 
+
+
+import https from "https"
+
+import crypto from "crypto"
+
+
+
+const NODE_VERSION = parseInt(process.versions.node.split(".")[0])
+
+
+
 class EInvoiceApi {
   private testMode = false
 
@@ -57,6 +69,8 @@ class EInvoiceApi {
     'User-Agent':
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36'
   }
+
+
 
   /**
    * Yeni bir e-Arşiv API örneği oluşturur.
@@ -859,11 +873,18 @@ class EInvoiceApi {
     const baseURL = this.getBaseURL()
     let response: AxiosResponse<T> | undefined
 
+
+
+
     try {
       response = await axios.post<T>(url, qs.stringify(params), {
         timeout: 10 * 1000,
         ...config,
         baseURL,
+        httpsAgent: NODE_VERSION === 18 ? new https.Agent({
+          secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT,
+        }) : undefined,
+
         headers: {
           ...config?.headers,
           ...EInvoiceApi.DEFAULT_HEADERS,
