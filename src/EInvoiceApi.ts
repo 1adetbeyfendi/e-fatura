@@ -1,5 +1,5 @@
-import qs from 'node:querystring'
 import { v1 as uuidV1 } from 'uuid'
+import * as qs from "querystring"
 import deepMerge from 'lodash.merge'
 import isPlainObject from './utils/isPlainObject'
 import getDateFormat from './utils/getDateFormat'
@@ -29,13 +29,13 @@ import type {
 
 
 
-import https from "https"
+import https, { Agent } from "https"
 
 import crypto from "crypto"
 
 
 
-const NODE_VERSION = parseInt(process.versions.node.split(".")[0])
+// const NODE_VERSION = parseInt(process.versions.node.split(".")[0])
 
 
 
@@ -876,14 +876,16 @@ class EInvoiceApi {
 
 
 
+
+
     try {
       response = await axios.post<T>(url, qs.stringify(params), {
         timeout: 10 * 1000,
         ...config,
         baseURL,
-        httpsAgent: NODE_VERSION === 18 ? new https.Agent({
+        httpsAgent: new Agent({
           secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT,
-        }) : undefined,
+        }),
 
         headers: {
           ...config?.headers,
@@ -892,6 +894,10 @@ class EInvoiceApi {
         }
       })
     } catch (e) {
+
+
+      console.log(e);
+
       if (axios.isAxiosError(e) && isPlainObject(e.response)) {
         const { data, status, statusText } = e.response
 

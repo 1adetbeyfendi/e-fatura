@@ -1,28 +1,25 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "useDefineForClassFields": true,
-    "module": "commonjs",
-    "lib": ["es2020", "dom"],
-    "moduleResolution": "node",
-    "strict": true,
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-
-
-    "isolatedModules": false,
+    "module": "CommonJS",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noImplicitReturns": true,
+    "esModuleInterop": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
     "noImplicitAny": false,
-    "skipLibCheck": false,
-    "typeRoots": [
-      "typings",
-      "node_modules/@types"
-    ]
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
+    // "typeRoots": ["typings", "node_modules/@types"]
   },
-  "include": ["./src/**/*.ts","./examples/*"],
+  "include": ["./src/**/*.ts"],
   "exclude": ["./src/**/*.test.ts"]
 }
